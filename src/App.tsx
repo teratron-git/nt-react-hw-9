@@ -1,5 +1,7 @@
 import { useState } from "react"
+import { BrowserRouter } from "react-router-dom"
 import "./App.css"
+import MenuTask from "./components/MenuTask"
 import TaskSwitcher from "./components/TaskSwitcher"
 
 const App = () => {
@@ -13,7 +15,7 @@ const App = () => {
     <>
       <TaskSwitcher task={task} onChangeHandler={handler} />
 
-      {task == "1" && <>Task 1</>}
+      {task == "1" && <MenuTask />}
 
       {/* {task == "2" && <Steps />} */}
 
