@@ -1,6 +1,7 @@
 import { useState } from "react"
-import { BrowserRouter } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 import "./App.css"
+import Crud from "./components/Crud"
 import MenuTask from "./components/MenuTask"
 import TaskSwitcher from "./components/TaskSwitcher"
 
@@ -13,12 +14,13 @@ const App = () => {
 
   return (
     <>
+      <Routes>
+        <Route path="/menu/*" element={<MenuTask />} />
+        <Route path="/crud/*" element={<Crud />} />
+        <Route path="*" element={<Navigate to="/menu/home" />} />
+      </Routes>
       <TaskSwitcher task={task} onChangeHandler={handler} />
-
-      {task == "1" && <MenuTask />}
-
-      {/* {task == "2" && <Steps />} */}
-
+      {/* {task == "2" && <Crud />} */}
       {task == "3" && <>Task 3</>}
     </>
   )

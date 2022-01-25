@@ -6,25 +6,25 @@ const Menu = () => {
     <nav className={st.menu}>
       <NavLink
         className={({ isActive }) => (isActive ? `${st.menu__item} ${true && st["menu__item-active"]}` : `${st.menu__item}`)}
-        to="/"
+        to="home"
       >
         Главная
       </NavLink>
       <NavLink
         className={({ isActive }) => (isActive ? `${st.menu__item} ${true && st["menu__item-active"]}` : `${st.menu__item}`)}
-        to="/drift"
+        to="drift"
       >
         Дрифт-такси
       </NavLink>
       <NavLink
         className={({ isActive }) => (isActive ? `${st.menu__item} ${true && st["menu__item-active"]}` : `${st.menu__item}`)}
-        to="/timeattack"
+        to="timeattack"
       >
         Time Attack
       </NavLink>
       <NavLink
         className={({ isActive }) => (isActive ? `${st.menu__item} ${true && st["menu__item-active"]}` : `${st.menu__item}`)}
-        to="/forza"
+        to="forza"
       >
         Forza Karting
       </NavLink>
@@ -98,10 +98,10 @@ export const MenuTask = () => {
       <Menu />
       <div className={st.page}>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/drift" element={<DriftPage />} />
-          <Route path="/timeattack" element={<TimeAttackPage />} />
-          <Route path="/forza" element={<ForzaPage />} />
+          <Route path="home" element={<HomePage />} />
+          <Route path="drift" element={<DriftPage />} />
+          <Route path="timeattack" element={<TimeAttackPage />} />
+          <Route path="forza" element={<ForzaPage />} />
         </Routes>
       </div>
     </div>

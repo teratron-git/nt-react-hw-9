@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom"
+
 interface IProps {
   task: string
   onChangeHandler: (e: any) => void
@@ -18,11 +20,10 @@ const TaskSwitcher = ({ task, onChangeHandler }: IProps) => {
         borderRadius: "30%",
       }}
     >
-      <input type="radio" id="choice1" name="task" value="1" defaultChecked={task === "1"} onChange={onChangeHandler} />
-      <label htmlFor="choice1">Task1 (Menu)</label>
+      <NavLink to="/menu/home">Task1 (Menu)</NavLink>
       <br />
-      {/* <input type="radio" id="choice2" name="task" value="2" defaultChecked={task === "2"} onChange={onChangeHandler} />
-      <label htmlFor="choice2">Task2 (Steps)</label> */}
+      <br />
+      <NavLink to="/crud">Task2 (Crud)</NavLink>
       {/* <br />
       <input type="radio" id="choice3" name="task" value="3" defaultChecked={task === "3"} onChange={onChangeHandler} />
       <label htmlFor="choice3">Task3</label> */}

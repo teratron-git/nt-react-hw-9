@@ -1,0 +1,138 @@
+.body {
+  box-sizing: border-box;
+  background: #fff;
+  min-width: 100%;
+  min-height: 100%;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  align-content: space-between;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: stretch;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  text-align: center;
+}
+
+.header i {
+  margin-left: 10px;
+  color: forestgreen;
+}
+
+.header label {
+  display: block;
+}
+
+.form {
+  position: relative;
+}
+
+input {
+  border-radius: 5px;
+}
+
+.buttonCrud {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+}
+
+.tz {
+  width: 170px;
+}
+
+.result {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  background-color: aqua;
+  width: 80%;
+  min-width: 620px;
+  align-self: center;
+  margin-top: 50px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 20px;
+  justify-content: center;
+  align-content: center;
+}
+
+.item {
+  position: relative;
+  background-color: cadetblue;
+  width: 600px;
+  height: 200px;
+  margin: 5px;
+  border-radius: 15px;
+}
+
+.itemСlose,
+.itemСloseNew {
+  position: absolute;
+  top: 0;
+  right: 0;
+  content: "X";
+  display: block;
+  width: 25px;
+  height: 25px;
+  background-color: brown;
+  color: white;
+  border-top-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.itemСloseNew {
+  text-decoration: none;
+  text-align: center;
+}
+
+.itemСlose:hover {
+  cursor: pointer;
+}
+
+.result li span {
+  width: 33%;
+}
+
+.result li span i {
+  margin: 0 10px;
+}
+
+.resultHeader {
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.result ol {
+  padding: 0;
+}
+
+.result li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+i {
+  cursor: pointer;
+}
+
+textarea {
+  border-radius: 15px;
+  padding: 20px 20px 40px 20px;
+}
+
+.navLink {
+  text-decoration: none;
+  color: currentcolor;
+}
