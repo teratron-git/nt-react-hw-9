@@ -75,6 +75,10 @@ input {
   border-radius: 15px;
 }
 
+.allPosts .item {
+  cursor: pointer;
+}
+
 .itemСlose,
 .itemСloseNew {
   position: absolute;
@@ -135,4 +139,17 @@ textarea {
 .navLink {
   text-decoration: none;
   color: currentcolor;
+}
+
+.buttonEdit,
+.buttonDelete,
+.buttonNew {
+  display: inline-block;
+  min-width: 100px;
+  margin: 10px;
+  padding: 10px;
+}
+
+.view {
+  background-color: antiquewhite;
 }

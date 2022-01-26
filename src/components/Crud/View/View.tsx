@@ -1,22 +1,25 @@
-import axios from "axios"
-import React, { useEffect, useState } from "react"
-import { Navigate, NavLink, useLocation, useMatch, useNavigate, useParams } from "react-router-dom"
+import { NavLink, useNavigate, useParams } from "react-router-dom"
+import { IData } from "../Crud"
 import st from "../Crud.module.css"
 
-const View = (props: any) => {
-  const navigate = useNavigate()
-  console.log("🚀 ~ file: View.tsx ~ line 7 ~ View ~ props", props)
-  const { id } = useParams()
-  console.log("🚀 ~ file: View.tsx ~ line 8 ~ View ~ temp", id)
+interface IProps {
+  result: IData[]
+  deleteHandler: (id: number, e: any) => void
+  editHandler: (id: number, content: string) => void
+}
 
-  const data = props.result.filter((item: any) => item.id == id)
-  console.log("🚀 ~ file: View.tsx ~ line 11 ~ View ~ data", data[0])
-  !data[0] && navigate("/crud")
+const View = ({ result, editHandler, deleteHandler }: IProps) => {
+  const navigate = useNavigate()
+  const { id } = useParams()
+  const data = result.filter((item: any) => item.id == id)
+  !data[0] && navigate("/crud/posts")
 
   return (
     <div className={st.body}>
       <div className={st.container}>
-        <div className={st.result}>
+        <h2>Просмотр одного сообщения</h2>
+        <NavLink to="/crud/posts">Вернуться ко всем соообщениям</NavLink>
+        <div className={`${st.result}  ${st.view}`}>
           <div className={st.item}>
             <div>{new Date(data[0]?.created).toLocaleString()}</div>
             <br />
@@ -27,16 +30,18 @@ const View = (props: any) => {
             </div>
           </div>
         </div>
-        <NavLink to="posts/new" className={st.navLink}>
-          <button type="button" className={st.buttonDelete}>
-            Сохранить
-          </button>
-        </NavLink>
-        <NavLink to="/crud" className={st.navLink}>
-          <button type="button" className={st.buttonDelete} onClick={() => props.deleteHandler(data[0]?.id)}>
-            Удалить
-          </button>
-        </NavLink>
+        <div className={st.buttons}>
+          <NavLink to={`/crud/posts/edit/${data[0]?.id}`} className={st.navLink}>
+            <button type="button" className={st.buttonEdit} onClick={() => editHandler(data[0]?.id, data[0]?.content)}>
+              Изменить
+            </button>
+          </NavLink>
+          <NavLink to="/crud/posts" className={st.navLink}>
+            <button type="button" className={st.buttonDelete} onClick={(e) => deleteHandler(data[0]?.id, e)}>
+              Удалить
+            </button>
+          </NavLink>
+        </div>
       </div>
     </div>
   )

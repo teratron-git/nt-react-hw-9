@@ -1,48 +1,62 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
-import { Navigate, NavLink, Route, Routes, useNavigate } from "react-router-dom"
-import st from "./Crud.module.css"
+import { Route, Routes, useNavigate } from "react-router-dom"
+import AllPosts from "./AllPosts"
+import Edit from "./Edit"
 import New from "./New"
 import View from "./View"
 
+export interface IData {
+  id: number
+  content: string
+  created: string
+}
+
 const Crud = () => {
   const [input, setInput] = useState("")
-  const [result, setResult] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [result, setResult] = useState<IData[]>([])
+  const [editContent, setEditContent] = useState({ id: null, content: "" })
 
   const navigate = useNavigate()
 
   async function getdata() {
+    setIsLoading(true)
     try {
       const response = await axios.get("http://localhost:7777/posts")
-      console.log("🚀 ~ file: CRUD.tsx ~ GETresponse", response)
-
+      setIsLoading(false)
       setResult([...response.data])
     } catch (error) {
       console.error(error)
+      setIsLoading(false)
     }
   }
 
-  async function postData() {
+  async function postData(id = 0) {
+    setIsLoading(true)
     const body = {
-      id: 0,
-      content: input,
+      id,
+      content: input || editContent?.content,
     }
     try {
       const response = await axios.post("http://localhost:7777/posts", body)
-      console.log("🚀 ~ file: CRUD.tsx ~ POSTresponse", response)
       if (response) getdata()
+      setIsLoading(false)
     } catch (error) {
       console.error(error)
+      setIsLoading(false)
     }
   }
 
-  async function deleteData(id: string) {
+  async function deleteData(id: number) {
+    setIsLoading(true)
     try {
       const response = await axios.delete(`http://localhost:7777/posts/${id}`)
-      console.log("🚀 ~ file: CRUD.tsx ~ DELETEresponse", response)
       if (response) getdata()
+      setIsLoading(false)
     } catch (error) {
       console.error(error)
+      setIsLoading(false)
     }
   }
 
@@ -50,74 +64,60 @@ const Crud = () => {
     getdata()
   }, [])
 
-  const inputChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const inputChangeHandler = (e: any) => {
     setInput(e.target.value)
   }
 
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const editContentChangeHandler = (e: any) => {
+    setEditContent({ ...editContent, content: e.target.value })
+  }
+
+  const submitHandler = (e: any) => {
     e.preventDefault()
     postData()
     setInput("")
 
-    navigate(`/crud`)
+    navigate(`/crud/posts`)
   }
 
-  const deleteHandler = (id: string, e: any) => {
+  const submitEditHandler = (id: number, e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    postData(id)
+
+    navigate(`/crud/posts`)
+  }
+
+  const deleteHandler = (id: number, e: any) => {
     deleteData(id)
+    setResult([])
     e.stopPropagation()
-    console.log("🚀 ~ file: Crud.tsx ~ line 66 ~ deleteHandler ~ e", e)
   }
 
-  const viewHandler = (id: string, e: any) => {
-    console.log("!!!", id)
+  const editHandler = (id: number, content: string) => {
+    setEditContent({ id, content })
 
-    navigate(`/crud/posts/${id}`)
-    // return (window.location.href = `/crud/posts/${id}`)
+    navigate(`/crud/posts/edit/${id}`)
   }
 
   return (
-    <>
-      <Routes>
-        <Route
-          path="posts/new"
-          element={<New input={input} inputChangeHandler={inputChangeHandler} submitHandler={submitHandler} />}
-        />
-        <Route path="posts/:id" element={<View result={result} deleteHandler={deleteHandler} />} />
-      </Routes>
-      <div className={st.body}>
-        <div className={st.container}>
-          <NavLink to="posts/new">
-            <button type="button" className="button">
-              Новое сообщение
-            </button>
-          </NavLink>
-          <br />
-          <br />
-          <div className={st.result}>
-            {result.map((item) => (
-              <div key={item.id}>
-                <br />
-                <div key={item.id} className={st.navLink} onClick={(e) => viewHandler(item.id, e)}>
-                  <div className={st.item}>
-                    <div>{new Date(item.created).toLocaleString()}</div>
-                    <br />
-                    <div>id: {item.id}</div>
-                    <br />
-                    <div>
-                      сообщение: <div>{item.content}</div>
-                    </div>
-                    <span className={st.itemСlose} onClick={(e) => deleteHandler(item.id, e)}>
-                      X
-                    </span>
-                  </div>
-                </div>
-                <br />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </>
+    <Routes>
+      <Route path="posts" element={<AllPosts result={result} isLoading={isLoading} deleteHandler={deleteHandler} />} />
+      <Route
+        path="posts/new"
+        element={<New input={input} inputChangeHandler={inputChangeHandler} submitHandler={submitHandler} />}
+      />
+      <Route
+        path="posts/edit/:id"
+        element={
+          <Edit
+            editContentChangeHandler={editContentChangeHandler}
+            submitEditHandler={submitEditHandler}
+            editContent={editContent}
+          />
+        }
+      />
+      <Route path="posts/:id" element={<View result={result} deleteHandler={deleteHandler} editHandler={editHandler} />} />
+    </Routes>
   )
 }
 

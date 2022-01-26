@@ -23,7 +23,7 @@ const TaskSwitcher = ({ task, onChangeHandler }: IProps) => {
       <NavLink to="/menu/home">Task1 (Menu)</NavLink>
       <br />
       <br />
-      <NavLink to="/crud">Task2 (Crud)</NavLink>
+      <NavLink to="/crud/posts">Task2 (Crud)</NavLink>
       {/* <br />
       <input type="radio" id="choice3" name="task" value="3" defaultChecked={task === "3"} onChange={onChangeHandler} />
       <label htmlFor="choice3">Task3</label> */}
